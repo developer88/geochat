@@ -11,13 +11,31 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120914195121) do
+ActiveRecord::Schema.define(:version => 20120923152715) do
+
+  create_table "messages", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "recipient_id"
+    t.text     "body"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
 
   create_table "users", :force => true do |t|
-    t.string   "email"
     t.string   "password_digest"
+    t.string   "login"
+    t.string   "identity"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "name"
+    t.string   "lat"
+    t.string   "lng"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
   end
+
+  add_index "users", ["identity", "provider"], :name => "index_users_on_identity_and_provider"
+  add_index "users", ["lat", "lng"], :name => "index_users_on_lat_and_lng"
+  add_index "users", ["login"], :name => "index_users_on_login"
 
 end
